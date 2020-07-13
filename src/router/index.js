@@ -5,6 +5,7 @@ import One from "@/views/One.vue"
 import Leave from "@/views/Leave.vue"
 import Detail from "@/components/Detail.vue"
 import Gz from "../views/Le/Gz.vue"
+import Course from "@/components/Course.vue"
 // 二级路由
 import Sho from "@/components/He/Sho.vue"
 import Kc from "@/components/He/Kc.vue"
@@ -124,6 +125,10 @@ Vue.use(VueRouter)
   {
     path:'/gz',
     component:Gz
+  },
+  {
+    path:"/course",
+    component:Course
   },
   {
     path: '/about',

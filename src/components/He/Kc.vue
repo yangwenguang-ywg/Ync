@@ -1,218 +1,240 @@
 <template>
   <div class="kc">
-    <div class="tsk">
-      <div>特色课</div>
-      <router-link tag="div" :to="{path:'/Search'}">
-        <van-icon name="search" />
-      </router-link>
-    </div>
-    <div class="fl">
-      <div class="fl1">
-        <p @click="f">分类</p>
-        <p>排序</p>
-        <p>筛选</p>
-      </div>
-
-      <div v-show="flag">显示隐藏</div>
-    </div>
-
-    <div class="content">
-      <!-- 内容-->
-      <div class="div1" v-for="(iteam,key) in sz" :key="key">
-        <div class="div1-1">
-          <p>{{iteam.aa}}</p>
+    <van-nav-bar class title="特色课">
+      <template #right>
+        <van-icon name="search" size="18" @click="go_ss()" />
+      </template>
+    </van-nav-bar>
+    <van-dropdown-menu>
+      <van-dropdown-item v-model="value1" :options="option1" />
+      <van-dropdown-item v-model="value2" :options="option2" />
+      <van-dropdown-item v-model="value3" :options="option3" />
+    </van-dropdown-menu>
+    <ul class="qdf_ul">
+      <li class="qdf_li" v-for="item of qdf_nav" :key="item.index" @click="qdf_tzxqy()">
+        <p class="qdf_title">
+          <font>{{item.news}}</font>
+        </p>
+        <div class="qdf_time">
+          <p class="qdf_after">{{item.time}}</p>
+          <p>共{{item.shi}}课时</p>
         </div>
-        <div class="div1-2">{{iteam.bb}}</div>
-        <div class="div1-3">
-          <div class="div1-3-1">
-            <!-- <img class="img1" src="/zhimg/zh3.gif" alt /> -->
-            <span>{{iteam.cc}}</span>
+        <div class="qdf_teacher">
+          <div class="qdf_teacher_item">
+            <img :src="item.img" alt />
+            <font>{{item.name}}</font>
           </div>
         </div>
-        <div class="div1-4">
-          <div>{{iteam.dd}}</div>
-          <div>{{iteam.ee}}</div>
-        </div>
-      </div>
-    </div>
+        <p class="qdf_info">
+          <span class="qdf_person">{{item.num}}人已报名</span>
+          <font class="qdf_free">{{item.con}}</font>
+        </p>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
+  name: "kc",
+  components: {},
+  props: {},
   data() {
     return {
-      flag: false,
-      sz: []
+      value1: 0,
+      value2: "a",
+      value3: "b",
+      option1: [
+        { text: "分类", value: 0 },
+        { text: "新款商品", value: 1 },
+        { text: "活动商品", value: 2 }
+      ],
+      option2: [
+        { text: "排序", value: "a" },
+        { text: "好评排序", value: "b" },
+        { text: "销量排序", value: "c" }
+      ],
+      option3: [
+        { text: "筛选", value: "b" },
+        { text: "好评排序", value: "b" },
+        { text: "销量排序", value: "c" }
+      ],
+      qdf_nav: [
+        {
+          news: "李老师16号到22号地理大课堂开课啦",
+          time: "03月16日 18:30 ~ 03月22日 15:00",
+          shi: "8",
+          img:
+            "https://baijiayun-wangxiao.oss-cn-beijing.aliyuncs.com/uploads/avatar.jpg",
+          name: "李青",
+          num: "20",
+          con: "免费"
+        },
+        {
+          news: "李老师9号地理大课堂开课啦",
+          time: "03月09日 18:30 ~ 03月15日 15:00",
+          shi: "7",
+          img:
+            "https://baijiayun-wangxiao.oss-cn-beijing.aliyuncs.com/uploads/avatar.jpg",
+          name: "李青",
+          num: "20",
+          con: "免费"
+        },
+        {
+          news: "李老师女神节地理大课堂开课啦",
+          time: "03月08日 08:30 ~ 03月08日 15:00",
+          shi: "3",
+          img:
+            "https://baijiayun-wangxiao.oss-cn-beijing.aliyuncs.com/uploads/avatar.jpg",
+          name: "李青",
+          num: "11",
+          con: "免费"
+        },
+        {
+          news: "李青29号1号地理大课堂开始啦",
+          time: "02月29日 10:00 ~ 03月01日 15:00",
+          shi: "5",
+          img:
+            "https://baijiayun-wangxiao.oss-cn-beijing.aliyuncs.com/uploads/avatar.jpg",
+          name: "李青",
+          num: "13",
+          con: "免费"
+        },
+        {
+          news: "22号李老师大课堂开课啦",
+          time: "02月22日 10:00 ~ 02月23日 20:00",
+          shi: "3",
+          img:
+            "https://baijiayun-wangxiao.oss-cn-beijing.aliyuncs.com/uploads/avatar.jpg",
+          name: "李青",
+          num: "6",
+          con: "免费"
+        }
+      ]
     };
   },
+  watch: {},
+  computed: {},
   methods: {
-    f() {
-      console.log("f");
-      this.flag = !this.flag;
+    go_ss() {
+      this.$router.push(-1);
     },
-    lls() {
-      this.$http.get("/api/app/recommend/appIndex").then(res => {
-        // console.log(res);
-        this.sz = res.data.data;
-      });
+
+    qdf_tzxqy() {
+      this.$router.push("/twoke");
     }
   },
-  mounted() {
-    this.lls();
-  }
+  created() {},
+  mounted() {}
 };
 </script>
 
 <style lang="scss">
-.van-swipe-item {
-  img {
-    width: 100%;
-    height: 400px;
+.kc {
+  .qdf_ul {
+    padding: 0.4rem;
+    padding: 4vw;
+    background: #f0f2f5;
   }
-}
-.home {
-  .hy {
+  .qdf_li {
+    background: #fff;
+    border-radius: 0.13333rem;
+    border-radius: 1.33333vw;
+    padding: 0 0.37333rem;
+    padding: 0 3.73333vw;
+    margin-bottom: 0.4rem;
+    margin-bottom: 4vw;
+    position: relative;
+  }
+  .qdf_title {
+    padding-top: 0.4rem;
+    padding-top: 4vw;
+  }
+  .qdf_title font {
+    font-size: 0.42667rem;
+    font-size: 4.26667vw;
+    // font-family: PingFangSC-Medium;
+    font-weight: 400;
+    color: #333;
+  }
+  .qdf_time {
+    display: flex;
+    align-items: center;
+  }
+  .van-nav-bar {
+    height: 1rem;
+  }
+  .van-nav-bar__title {
+    font-size: 0.5rem;
+  }
+  .qdf_after {
+    padding-left: 0.53333rem;
+    padding-left: 5.33333vw;
+    // background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAGdElEQ…7D7bIT6T8ppX5D8qmltjcNVN9Rf6pC343nMmv03YDqJvO/L6pVWKmfOusAAAAASUVORK5CYII=) no-repeat 0;
+    background-size: 0.37333rem 0.37333rem;
+    background-size: 3.73333vw 3.73333vw;
+  }
+  .qdf_time p {
+    height: 0.8rem;
+    height: 8vw;
+    line-height: 0.8rem;
+    line-height: 8vw;
+    display: inline-block;
+    font-size: 0.32rem;
+    font-size: 3.2vw;
+    // font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: #666;
+    padding-right: 0.45333rem;
+    padding-right: 4.53333vw;
+    position: relative;
+  }
+  .qdf_teacher {
+    height: 1.73333rem;
+    height: 17.33333vw;
+    display: flex;
+  }
+  .qdf_teacher_item {
+    display: flex;
     height: 100%;
-    overflow: hidden;
-    .kc {
-      position: relative;
-      margin-top: -60px;
-      padding: 0 20px;
-      ul {
-        display: flex;
-        justify-content: space-around;
-        li {
-          width: 203px;
-          height: 203px;
-          background: #fff;
-          text-align: center;
-          border-radius: 23px;
-          img {
-            width: 42px;
-            height: 42px;
-            margin: 56px 0 13px 0;
-          }
-          p {
-            font-size: 25px;
-            color: #9b9c9c;
-          }
-        }
-      }
-    }
-    .ms {
-      padding: 0 30px;
-      h5 {
-        font-size: 30px;
-        color: #666;
-        margin: 38px 0;
-        border-left: 7px solid #eb5600;
-        padding-left: 18px;
-      }
-      ul {
-        li {
-          display: flex;
-          width: 100%;
-          height: 160px;
-          background: #fff;
-          margin-bottom: 17px;
-          align-items: center;
-          border-radius: 10px;
-          img {
-            width: 81px;
-            height: 81px;
-            margin: 0 22px 0 30px;
-            border-radius: 50%;
-          }
-          h2 {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            height: 60%;
-            width: 100%;
-            p {
-              font-size: 29px;
-              color: #666;
-              span {
-                color: #ea7a2f;
-                font-size: 25px;
-              }
-            }
-            b {
-              font-size: 22px;
-              width: 80%;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              color: #b7b7b7;
-            }
-          }
-        }
-      }
-    }
-    .jing {
-      padding: 0 30px;
-      h5 {
-        font-weight: normal;
-        font-size: 30px;
-        color: #666;
-        margin: 33px 0;
-        border-left: 7px solid #eb5600;
-        padding-left: 18px;
-      }
-      ul {
-        li {
-          width: 100%;
-          height: 407px;
-          background: #fff;
-          border-radius: 10px;
-          margin-bottom: 30px;
-          padding: 0px 29px 0 29px;
-          box-sizing: border-box;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-around;
-          h4 {
-            font-size: 33px;
-          }
-          .bo {
-            display: flex;
-            flex-wrap: wrap;
-            h3 {
-              display: flex;
-              height: 55px;
-              align-items: center;
-              margin-bottom: 15px;
-              img {
-                width: 55px;
-                height: 55px;
-                border-radius: 50%;
-              }
-              p {
-                font-size: 20px;
-                color: #666;
-                margin: 0 20px;
-              }
-            }
-          }
-          h2 {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid #eee;
-            padding-top: 26px;
-            p {
-              font-size: 23px;
-              color: #666;
-            }
-            b {
-              font-size: 33px;
-              color: #389d1d;
-            }
-          }
-        }
-      }
-    }
+    align-items: center;
+  }
+  .qdf_teacher_item img {
+    width: 0.72rem;
+    width: 7.2vw;
+    height: 0.72rem;
+    height: 7.2vw;
+    border-radius: 50%;
+  }
+  .qdf_teacher_item font {
+    font-size: 0.32rem;
+    font-size: 3.2vw;
+    // font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.45);
+    margin-left: 0.22667rem;
+    margin-left: 2.26667vw;
+    margin-right: 0.46667rem;
+    margin-right: 4.66667vw;
+  }
+  .qdf_info {
+    border-top: 1px solid #f5f5f5;
+    height: 1.17333rem;
+    height: 11.73333vw;
+    line-height: 1.17333rem;
+    line-height: 11.73333vw;
+    display: flex;
+    font-size: 0.34667rem;
+    font-size: 3.46667vw;
+    // font-family: PingFangSC-Regular;
+  }
+  .qdf_person {
+    flex: 1;
+  }
+  .qdf_free {
+    color: #44a426;
+    font-size: 0.42667rem;
+    font-size: 4.26667vw;
   }
 }
 </style>

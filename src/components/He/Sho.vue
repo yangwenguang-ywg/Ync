@@ -42,7 +42,7 @@
         <div class="jing" v-if="item.channel_info.type == 1">
           <h5>{{ item.channel_info.name }}</h5>
           <ul>
-            <li v-for="(v,i) of item.list" :key="i">
+            <li v-for="(v,i) of item.list" :key="i" @click="course(v.id,v.course_type)">
               <h4>{{ v.title }}</h4>
               <div class="bo">
                 <h3 v-for="(m,n) of v.teachers_list" :key="n">
@@ -98,7 +98,7 @@ export default {
       arr: [],
       banner: [],
       show: false,
-      id:''
+      id: ""
     };
   },
   mounted() {
@@ -142,8 +142,17 @@ export default {
       }
     },
     // 跳到登陆页面
-    dd(){
-      this.$router.push("/loding")
+    dd() {
+      this.$router.push("/loding");
+    },
+    // 进入课程详情页
+    course(id, course_type) {
+      console.log(id);
+      this.$router.push({
+        path: "/course",
+        query: { id: id, course_type: course_type }
+        //  /query:{}
+      });
     }
   },
   filters: {
@@ -327,17 +336,16 @@ export default {
       text-align: center;
       margin-top: 5px;
     }
-    .btt{
+    .btt {
       display: flex;
       justify-content: center;
       margin-top: 50px;
-       .van-button {
-      width: 80%;
-      height: 85px;
-      border-radius: 50px;
+      .van-button {
+        width: 80%;
+        height: 85px;
+        border-radius: 50px;
+      }
     }
-    }
-   
   }
 }
 </style>
