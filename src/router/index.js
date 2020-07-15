@@ -6,6 +6,7 @@ import Leave from "@/views/Leave.vue"
 import Detail from "@/components/Detail.vue"
 import Gz from "../views/Le/Gz.vue"
 import Course from "@/components/Course.vue"
+import Search from "@/views/Le/Search.vue"
 // 二级路由
 import Sho from "@/components/He/Sho.vue"
 import Kc from "@/components/He/Kc.vue"
@@ -129,6 +130,10 @@ Vue.use(VueRouter)
   {
     path:"/course",
     component:Course
+  },
+  {
+    path:'/search',
+    component:Search
   },
   {
     path: '/about',

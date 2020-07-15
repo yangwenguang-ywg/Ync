@@ -24,7 +24,11 @@
           </li>
         </ul>
       </div>
-      <div class="box" v-for="(item,index) of list" :key="index">
+      <!-- loading加载 -->
+      <div class="lo" v-show="sh">
+        <van-loading size="35" color="#eb5600" />
+      </div>
+      <div class="box" v-for="(item,index) of list" :key="index" v-show="!sh">
         <!-- 名师阵容 -->
         <div class="ms" v-if="item.channel_info.type == 3">
           <h5>{{ item.channel_info.name }}</h5>
@@ -98,7 +102,8 @@ export default {
       arr: [],
       banner: [],
       show: false,
-      id: ""
+      id: "",
+      sh: true
     };
   },
   mounted() {
@@ -114,17 +119,19 @@ export default {
     },
     // 轮播图
     async Banner() {
-      let { data: res } = await this.$http.get("api/app/banner");
+      let { data: res } = await axios.get("https://www.365msmk.com/api/app/banner");
       // console.log(res);
       this.banner = res.data;
     },
     // 首页列表
     async mi() {
+      this.sh = true;
       let { data: res } = await axios.get(
         "https://www.365msmk.com/api/app/recommend/appIndex?"
       );
       // console.log(res);
       this.list = res.data;
+      this.sh = false;
     },
     // 点击进入详情
     async edt(v) {
@@ -202,6 +209,12 @@ export default {
           }
         }
       }
+    }
+    .lo {
+      height: 1100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .ms {
       padding: 0 30px;
